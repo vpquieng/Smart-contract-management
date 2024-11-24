@@ -3,7 +3,9 @@ This project is part of the 4th Metacrafters Project for Module 2 on `Smart Cont
 - Deposit funds
 - Withdraw funds
 - Multiply their balance
-The project includes functionalities for managing account balances securely on the Ethereum blockchain. The baseline of this code is from `https://github.com/MetacrafterChris/SCM-Starter.git`
+The project includes functionalities for managing account balances securely on the Ethereum blockchain.
+
+The baseline of this code is from `https://github.com/MetacrafterChris/SCM-Starter.git`
 
 ## Requirements
 To deploy and interact with this contract website. Must have the following requirements:
