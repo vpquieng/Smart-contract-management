@@ -17,19 +17,19 @@ To deploy and interact with this contract website. Must have the following requi
 
 ## Features
 1. Deposit Funds
-- Allows users (contract owner) to deposit a specified amount into their account.
+    - Allows users (contract owner) to deposit a specified amount into their account.
 
 2. Withdraw Funds
-- Enables the withdrawal of funds from the account balance, ensuring sufficient funds exist.
+    - Enables the withdrawal of funds from the account balance, ensuring sufficient funds exist.
 
 3. Multiply Balance
-- Allows users to multiply their balance by a specified factor.
+    - Allows users to multiply their balance by a specified factor.
 
 4. Event Listening
-- Real-time updates are provided for transactions, including balance multiplications.
+    - Real-time updates are provided for transactions, including balance multiplications.
 
 5. Owner-Restricted Access
-Only the contract owner is allowed to perform these actions, ensuring account security.
+    - Only the contract owner is allowed to perform these actions, ensuring account security.
 
 ## Installation
 1. Clone the repository in any location on your desktop:
