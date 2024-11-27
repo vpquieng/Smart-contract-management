@@ -7,7 +7,8 @@ export default function HomePage() {
   const [account, setAccount] = useState(undefined);
   const [atm, setATM] = useState(undefined);
   const [balance, setBalance] = useState(undefined);
-  const [inputValue, setInputValue] = useState({ deposit: 0, withdraw: 0, multiply: 0 }); //sets all input values to 0
+  const [subscription, setSubscription] = useState(undefined);
+  const [inputValue, setInputValue] = useState({ deposit: 0, withdraw: 0, multiply: 0, subscriptionName: "Netflix", subscriptionDuration: 1}); 
 
   const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
   const atmABI = atm_abi.abi;
@@ -96,6 +97,50 @@ export default function HomePage() {
       await tx.wait();
     }
   };
+  const addSubscription = async () => {
+    if (atm) {
+      try {
+        const tx = await atm.addSubscription(
+          inputValue.subscriptionName,
+          parseInt(inputValue.subscriptionDuration)
+        );
+        await tx.wait();
+        getBalance();
+        alert("Subscription successfully subscribe");
+      } catch (error) {
+        console.error("Failed adding subscription:", error);
+        alert("Please check your balance.");
+      }
+    }
+  };
+  const cancelSubscription = async () => {
+    if (atm) {
+      try {
+        const tx = await atm.cancelSubscription();
+        await tx.wait();
+        getBalance();
+        alert("Subscription successfully canceled");
+      } catch (error) {
+        console.error("Failed canceling subscription:", error);
+        alert("Make sure your subscription is active.");
+      }
+    }
+  };
+  const viewSubscription = async () => {
+    if (atm) {
+      try {
+        const subscriptionDetails = await atm.viewSubscription();
+        setSubscription({
+          name: subscriptionDetails[0],
+          isActive: subscriptionDetails[1],
+          duration: subscriptionDetails[2].toString()
+        });
+      } catch (error) {
+        console.error("Failed viewing subscription:", error);
+        alert("There are no subscriptions.");
+      }
+    }
+  };
 
   const initUser = () => {
     // Check to see if user has Metamask
@@ -142,7 +187,41 @@ export default function HomePage() {
             onChange={handleInputChange}
           />
           <button onClick={multiplyBalance}>Multiply Balance</button>
-        </div>    
+        </div>
+        <div>
+          <h2>Subscription Service</h2>
+          <select
+            name="subscriptionName"
+            onChange={handleInputChange}
+            value={inputValue.subscriptionName}
+          >
+            <option value="Netflix">Netflix</option>
+            <option value="Bilibili">Bilibili</option>
+            <option value="Disney+">Disney+</option>
+          </select>
+          <select
+            name="subscriptionDuration"
+            onChange={handleInputChange}
+            value={inputValue.subscriptionDuration}
+          >
+            <option value="1">1 Month</option>
+            <option value="3">3 Months</option>
+            <option value="12">1 Year</option>
+          </select>
+          <button onClick={addSubscription}>Subscribe</button>
+          <button onClick={cancelSubscription}>Cancel Subscription</button>
+          <button onClick={viewSubscription}>View Subscription</button>
+          {subscription && (
+            <div>
+              <h3>Subscription Details</h3>
+              <p>
+                Subscription: {subscription.name} <br />
+                Active: {subscription.isActive ? "Active" : "Inactive"} <br />
+                Duration: {subscription.duration} Months
+              </p>
+          </div>
+          )}
+        </div>
       </div>
     )
   }
